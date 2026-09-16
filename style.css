@@ -1,0 +1,732 @@
+/* RESET BASE */
+html,
+body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  background: #1a1a1a;
+  color: white;
+  font-family: sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+.main-viewport {
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.hidden {
+  display: none !important;
+}
+
+/* LAYOUT PRINCIPALE */
+.game-layout {
+  display: flex;
+  gap: 70px;
+  align-items: center;
+  justify-content: center;
+  transform: scale(0.92);
+  transform-origin: center;
+}
+
+/* COLONNA SINISTRA (STRUMENTO) */
+.column-left {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-right: 80px;
+}
+
+.axis-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+
+#axis-ring {
+  width: 440px;
+  height: 440px;
+  border-radius: 50%;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#axis-svg {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  inset: 0;
+  pointer-events: none;
+}
+
+.axis-tick {
+  stroke: #888;
+  stroke-width: 1;
+}
+
+.axis-tick.major {
+  stroke: #ddd;
+  stroke-width: 2;
+}
+
+.axis-text {
+  fill: #f2f2f2;
+  font-size: 12px;
+  font-weight: bold;
+  font-family: monospace;
+  text-anchor: middle;
+  dominant-baseline: middle;
+  paint-order: stroke;
+  stroke: #1a1a1a;
+  stroke-width: 2px;
+  stroke-linejoin: round;
+}
+
+.axis-needle {
+  stroke: red;
+  stroke-width: 3;
+}
+
+#instrument {
+  width: 340px;
+  height: 340px;
+  background: #000;
+  border: 8px solid #333;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2;
+}
+
+#mira-container {
+  width: 280px;
+  height: 280px;
+}
+
+#mira-container svg {
+  width: 100%;
+  height: 100%;
+}
+
+.axis-buttons {
+  margin-top: 8px;
+  display: flex;
+  gap: 12px;
+}
+
+.btn-axis {
+  min-width: 72px;
+  height: 42px;
+  background: #333;
+  color: #00ff66;
+  border-radius: 12px;
+  border: 2px solid #444;
+  font-size: 22px;
+  cursor: pointer;
+}
+
+.drum-layout-horizontal {
+  display: flex;
+  align-items: center;
+  margin-right: -70px;
+}
+
+.reading-window {
+  width: 200px;
+  height: 200px;
+  background: #fff;
+  border: 6px solid #444;
+  border-radius: 50%;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+  margin: 10px 20px;
+}
+
+.reading-line {
+  position: absolute;
+  top: 50%;
+  width: 100%;
+  height: 3px;
+  background: red;
+  z-index: 10;
+  transform: translateY(-50%);
+}
+
+.btn-arrow {
+  width: 70px;
+  height: 70px;
+  background: #333;
+  color: #00ff66;
+  border-radius: 50%;
+  border: 2px solid #444;
+  font-size: 30px;
+  cursor: pointer;
+  margin: 5px 15px;
+}
+
+/* COLONNA DESTRA */
+.column-right {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.stats {
+  display: flex;
+  gap: 25px;
+  margin-bottom: 15px;
+  border-bottom: 1px solid #333;
+  padding-bottom: 10px;
+  width: 100%;
+  justify-content: center;
+  font-size: 1.1em;
+}
+
+.bottom-controls {
+  background: #222;
+  padding: 22px;
+  border-radius: 20px;
+  border: 1px solid #444;
+  width: 470px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.answer-section {
+  width: 100%;
+  margin-bottom: 14px;
+  border: 1px solid #444;
+  border-radius: 12px;
+  padding: 12px;
+  background: #1b1b1b;
+}
+
+.answer-section h2 {
+  margin: 0 0 10px 0;
+  text-align: center;
+  font-size: 1.05em;
+  color: #00ff66;
+  letter-spacing: 0.08em;
+}
+
+.transpose-section h2 {
+  color: #61b5ff;
+}
+
+.rx-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 0.8fr;
+  gap: 8px;
+}
+
+.rx-field label {
+  display: block;
+  color: #aaa;
+  font-size: 0.75em;
+  text-align: center;
+  margin-bottom: 4px;
+}
+
+.rx-field input {
+  width: 100%;
+  background: #000;
+  color: #00ff66;
+  border: 2px solid #555;
+  height: 50px;
+  font-size: 1.25em;
+  text-align: center;
+  border-radius: 8px;
+  font-family: courier, monospace;
+  cursor: pointer;
+  touch-action: manipulation;
+  user-select: none;
+  transition: border-color 0.15s, box-shadow 0.15s, transform 0.08s;
+}
+
+.rx-field input:hover {
+  border-color: #888;
+}
+
+.rx-field input:active {
+  transform: scale(0.985);
+}
+
+.rx-field input.active-input {
+  border-color: #ffbc00;
+  box-shadow: 0 0 0 2px rgba(255, 188, 0, 0.18);
+}
+
+.transpose-section .rx-field input {
+  color: #61b5ff;
+}
+
+
+
+/* TASTIERINO */
+.numpad {
+  display: grid;
+  grid-template-columns: repeat(3, 80px);
+  grid-template-rows: repeat(5, 60px);
+  gap: 9px;
+}
+
+.numpad button {
+  width: 80px;
+  height: 60px;
+  background: #3a3a3a;
+  color: white;
+  border-radius: 8px;
+  border: 1px solid #555;
+  font-size: 1.4em;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s;
+}
+
+.clear-btn {
+  color: #ff6666 !important;
+  font-size: 2.2em !important;
+}
+
+.verify-btn {
+  grid-column: span 2;
+  width: 100% !important;
+  background: #007bff !important;
+  color: white !important;
+  font-weight: bold;
+  font-size: 1.3em !important;
+}
+
+/* FEEDBACK */
+#feedback {
+  margin-top: 14px;
+  min-height: 38px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.35em;
+  font-weight: bold;
+  text-align: center;
+  line-height: 1.3;
+}
+
+.f-success {
+  color: #00ff66;
+}
+
+.f-error {
+  color: #ff4444;
+}
+
+.f-retry {
+  color: #ffbc00;
+}
+
+#btn-next {
+  background: #28a745;
+  color: white;
+  padding: 10px 25px;
+  border-radius: 12px;
+  width: auto;
+  min-width: 180px;
+  font-size: 1.1em;
+  font-weight: bold;
+  border: none;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
+/* INTERFACCIA ACCESSORIA */
+.btn-menu {
+  position: fixed;
+  bottom: 25px;
+  left: 25px;
+  background: #333;
+  color: #888;
+  border: 1px solid #444;
+  padding: 10px 20px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: bold;
+  z-index: 100;
+}
+
+.credits {
+  position: fixed;
+  bottom: 10px;
+  width: 100%;
+  text-align: center;
+  color: #444;
+  font-size: 0.8em;
+  pointer-events: none;
+}
+
+/* SETUP PANEL */
+#setup-panel {
+  background: #2c2c2c;
+  padding: 40px;
+  border-radius: 15px;
+  width: 380px;
+  text-align: center;
+  border: 1px solid #444;
+}
+
+.setup-group {
+  margin-bottom: 20px;
+}
+
+.setup-group label {
+  display: block;
+  margin-bottom: 5px;
+}
+
+.setup-group input {
+  padding: 8px;
+  font-size: 1.2em;
+  width: 80px;
+  text-align: center;
+}
+
+.btn-start {
+  background: #444;
+  color: white;
+  padding: 15px;
+  width: 100%;
+  border-radius: 8px;
+  border: 1px solid #666;
+  cursor: pointer;
+  font-size: 1.2em;
+  font-weight: bold;
+}
+
+/* SCALA TAMBURO */
+.drum-scale {
+  position: absolute;
+  width: 100%;
+  top: 0;
+  left: 0;
+  transition: transform 0.1s ease-out;
+}
+
+.tick-row {
+  display: flex;
+  height: 12px;
+  align-items: center;
+}
+
+.t-left {
+  width: 45%;
+  border-right: 2px solid black;
+  height: 100%;
+  position: relative;
+}
+
+.t-right {
+  width: 55%;
+  color: black;
+  font-weight: 900;
+  padding-left: 10px;
+  font-size: 17px;
+  font-family: monospace;
+}
+
+@media (max-width: 1200px) {
+  .game-layout {
+    transform: scale(0.78);
+  }
+}
+
+@media (max-width: 900px) {
+  html,
+  body {
+    overflow: auto;
+  }
+
+  .main-viewport {
+    height: auto;
+    min-height: 100vh;
+    padding: 20px 0 80px;
+  }
+
+  .game-layout {
+    transform: none;
+    flex-direction: column;
+    gap: 30px;
+  }
+
+  .column-left {
+    margin-right: 0;
+  }
+
+  .drum-layout-horizontal {
+    margin-right: 0;
+  }
+
+  .bottom-controls {
+    width: min(470px, 94vw);
+  }
+}
+
+#axis-svg {
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+/* v2.5: sezione letture, senza modificare la geometria del focometro */
+.readings-section { margin-bottom: 10px; }
+.readings-grid {
+  display: grid;
+  grid-template-columns: 38px 1fr 1fr;
+  gap: 8px 10px;
+  align-items: end;
+}
+.reading-label {
+  font-weight: 800;
+  align-self: center;
+  text-align: center;
+}
+
+
+/* v2.8 — tastierino sopra, area risposte incorniciata sotto */
+.answers-frame {
+  margin-top: 12px;
+  padding: 12px;
+  border: 1px solid rgba(255,255,255,0.24);
+  border-radius: 10px;
+  background: rgba(255,255,255,0.035);
+  display: grid;
+  grid-template-columns: minmax(0, 0.95fr) minmax(0, 1.05fr);
+  gap: 12px;
+  align-items: start;
+}
+
+.answers-left,
+.answers-right {
+  min-width: 0;
+}
+
+.answers-right {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.answers-frame .answer-section {
+  margin: 0;
+}
+
+.answers-frame .answer-section h2 {
+  margin-top: 0;
+}
+
+.answers-right .rx-grid {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.answers-right .rx-field input {
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.bottom-controls.toric-controls > .numpad {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+@media (max-width: 980px) {
+  .answers-frame {
+    grid-template-columns: 1fr;
+  }
+}
+
+
+/* =========================================================
+   v3.1 — layout corretto
+   TUTTI i campi sopra il tastierino.
+   Box destro realmente più largo.
+   Nessuno spazio tra cornice risposte e tastierino.
+   ========================================================= */
+
+.game-layout {
+  gap: 24px !important;
+}
+
+.column-left {
+  margin-right: 20px !important;
+}
+
+.column-right {
+  width: 580px !important;
+  min-width: 580px !important;
+  align-items: stretch !important;
+}
+
+.bottom-controls.toric-controls {
+  width: 580px !important;
+  box-sizing: border-box !important;
+  padding: 16px !important;
+  align-items: stretch !important;
+  gap: 0 !important;
+}
+
+/* La cornice delle risposte occupa davvero tutta la colonna destra */
+.answers-frame {
+  width: 100% !important;
+  box-sizing: border-box !important;
+  margin: 0 !important;
+  padding: 12px !important;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.2fr) !important;
+  gap: 12px !important;
+}
+
+/* Nessun vuoto tra cornice e tastierino */
+.bottom-controls.toric-controls > .answers-frame + .numpad {
+  margin-top: 0 !important;
+  padding-top: 0 !important;
+}
+
+/* Tastierino largo esattamente come la cornice */
+.bottom-controls.toric-controls > .numpad {
+  width: 100% !important;
+  box-sizing: border-box !important;
+  margin: 0 !important;
+  display: grid !important;
+  grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+  grid-template-rows: repeat(5, 54px) !important;
+  gap: 8px !important;
+}
+
+/* I tasti si allargano con il tastierino */
+.bottom-controls.toric-controls > .numpad button {
+  width: 100% !important;
+  height: 54px !important;
+  box-sizing: border-box !important;
+}
+
+/* Ricetta e trasposta restano una sotto l'altra */
+.answers-right {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 8px !important;
+}
+
+.answers-right .answer-section,
+.answers-left .answer-section {
+  margin: 0 !important;
+}
+
+.answers-right .rx-grid {
+  grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+  gap: 8px !important;
+}
+
+/* Riduce al minimo il vuoto verticale della colonna destra */
+.stats {
+  margin-bottom: 6px !important;
+}
+
+@media (max-width: 1150px) {
+  .column-right {
+    width: 520px !important;
+    min-width: 520px !important;
+  }
+
+  .bottom-controls.toric-controls {
+    width: 520px !important;
+  }
+
+  .game-layout {
+    gap: 12px !important;
+    transform: scale(0.88);
+  }
+
+  .column-left {
+    margin-right: 0 !important;
+  }
+}
+
+@media (max-width: 900px) {
+  .column-right,
+  .bottom-controls.toric-controls {
+    width: 100% !important;
+    min-width: 0 !important;
+  }
+
+  .answers-frame {
+    grid-template-columns: 1fr !important;
+  }
+}
+
+
+/* =========================================================
+   v3.2 — elimina la fascia vuota sopra le risposte
+   ========================================================= */
+
+/* Avvicina il pannello dei controlli alle statistiche */
+.column-right .stats {
+  margin-bottom: 4px !important;
+  padding-bottom: 6px !important;
+}
+
+/* Riduce il padding superiore del contenitore esterno */
+.bottom-controls.toric-controls {
+  padding-top: 6px !important;
+}
+
+/* Il box delle risposte parte subito in alto */
+.bottom-controls.toric-controls > .answers-frame {
+  margin-top: 0 !important;
+}
+
+/* Evita margini superiori interni inutili */
+.answers-frame .answers-left,
+.answers-frame .answers-right {
+  margin-top: 0 !important;
+  padding-top: 0 !important;
+}
+
+.answers-frame .answer-section:first-child {
+  margin-top: 0 !important;
+}
+
+/* Feedback/next button non devono occupare spazio quando vuoti/nascosti */
+#feedback:empty {
+  display: none !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+#btn-next.hidden {
+  display: none !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+
+/* v3.3 — piccolo respiro tra area risposte e tastierino */
+.bottom-controls.toric-controls > .answers-frame + .numpad {
+  margin-top: 10px !important;
+}
+
+
+/* v3.4 — sposta leggermente a destra l'intero blocco destro */
+.column-right {
+  transform: translateX(24px);
+}
